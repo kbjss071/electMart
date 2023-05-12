@@ -74,6 +74,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'electMart.wsgi.application'
 
+AUTH_USER_MODEL = 'accounts.Account'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
