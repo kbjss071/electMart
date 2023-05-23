@@ -4,6 +4,11 @@
 {% block content %}
 <section class="section-content padding-y bg">
     <div class="container">
+      {% if 'search' in request.path %}
+      <h2 class="title-page">Search Result</h2>
+      {% else %}
+      <h2 class="title-page">Our Store</h2>
+      {% endif %}
     
     <!-- ============================ COMPONENT 1 ================================= -->
     <div class="card">
