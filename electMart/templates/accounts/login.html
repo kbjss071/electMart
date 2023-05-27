@@ -2,6 +2,16 @@
 
 {% block content %}
 <section class="section-conten padding-y" style="min-height:84vh">
+
+  {% if request.GET.command == 'verification' %}
+
+  <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 380px; margin-top:100px;">
+    Registration successful. Please confirm a verification email in your email. [{{request.GET.email}}]
+    <br><br>
+    Already verified? <a href="{% url 'login' %}">Login</a>
+  </div>
+  {% else %}
+
   <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
     <div class="card-body">
       <h4 class="card-title mb-4">Sign in</h4>
@@ -27,5 +37,6 @@
     
          <p class="text-center mt-4">Don't have account? <a href="#">Sign up</a></p>
          <br><br>   
-    </section>
+  {% endif %}
+</section>
 {% endblock %}
