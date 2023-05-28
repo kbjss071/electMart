@@ -28,7 +28,7 @@ class RegistrationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
-        password = cleaned_data.geT('password')
+        password = cleaned_data.get('password')
         check_password= cleaned_data.get('check_password')
 
         if password != check_password:

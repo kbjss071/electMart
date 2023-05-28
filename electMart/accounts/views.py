@@ -34,19 +34,20 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-            current_site = get_current_site(request)
-            mail_subject = 'Please activate your account'
-            message = render_to_string('accounts/account_verification_email.html', {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token
-            })
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
-            messages.success(request, 'Registration successful. Please confirm a verification email in your email.')
-            return redirect('/accounts/login/?command=verification&email='+email)
+            # current_site = get_current_site(request)
+            # mail_subject = 'Please activate your account'
+            # message = render_to_string('accounts/account_verification_email.html', {
+            #     'user': user,
+            #     'domain': current_site,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': default_token_generator.make_token(user)
+            # })
+            # to_email = email
+            # send_email = EmailMessage(mail_subject, message, to=[to_email])
+            # send_email.send()
+            # messages.success(request, 'Registration successful. Please confirm a verification email in your email.')
+            # return redirect('/accounts/login/?command=verification&email='+email)
+            return redirect('login')
     
     else:
         form = RegistrationForm()
@@ -58,10 +59,10 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
 
-        user = auth.authenticatte(username=username, password=password)
+        user = auth.authenticate(email=email, password=password)
 
         if user is not None:
             auth.login(request, user)
