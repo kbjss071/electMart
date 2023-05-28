@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Hi there,
+
+Your username is "{{user.username}}"
+
+Please click the below link to sign in with your account.
+http://{{domain}}{% url 'login' %}
+
+{% endautoscape %}

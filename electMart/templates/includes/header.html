@@ -72,10 +72,10 @@
                         </div>
                         {% else %}
                         <div class="widget-header">
-                            <small class="title text-muted">Welcome { user.username }!</small>
+                            <small class="title text-muted">Welcome {{ user.username }}!</small>
                             <div>
                                 <a href="{% url 'logout' %}">Log out</a> <span class="dark-transp"> | </span>
-                                <a href="{% url 'register' %}"> Dashboard </a>
+                                <a href="{% url 'dashboard' %}"> Dashboard </a>
                             </div>
                         </div>
                         {% endif %}
