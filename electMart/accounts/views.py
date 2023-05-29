@@ -32,6 +32,7 @@ def register(request):
                 password=password
                 )
             user.phone_number = phone_number
+            user.is_active = True
             user.save()
 
             # current_site = get_current_site(request)

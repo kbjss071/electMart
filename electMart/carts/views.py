@@ -41,7 +41,7 @@ def add_to_cart(request, product_id):
         ex_var_list = []
         id = []
         for item in cart_item:
-            existing_variation = item.variations.all()
+            existing_variation = item.variation.all()
             ex_var_list.append(existing_variation)
             id.append(item.id)
             
@@ -113,3 +113,6 @@ def cart (request, total=0, quantity=0, tax=0, grand_total=0, cart_items=None):
         'grand_total': grand_total
     }
     return render(request, 'store/cart.html', context)
+
+def checkout(request):
+    return render(request, 'store/checkout.html')
