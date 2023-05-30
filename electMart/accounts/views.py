@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .models import Account
+from carts.models import Cart, CartItem
+from carts.views import get_cart_id
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 
@@ -66,6 +68,26 @@ def login(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            try:
+                print('executing try block')
+                # Find a cart session id under the user
+                print(get_cart_id(request))
+                cart = Cart.objects.get(cart_id=get_cart_id(request))
+                print(cart)
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                print(is_cart_item_exists)
+                if is_cart_item_exists:
+                    # In order to get cartItems under the given cart
+                    cart_items = CartItem.objects.filter(cart=cart)
+                    print(cart_items)
+                    for item in cart_items:
+                        item.user = user
+                        print(user)
+                        print(item.user)
+                        item.save()
+            except:
+                print('executing except block')
+                pass
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
             return redirect('dashboard')
