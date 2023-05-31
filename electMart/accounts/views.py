@@ -69,22 +69,41 @@ def login(request):
 
         if user is not None:
             try:
-                print('executing try block')
                 # Find a cart session id under the user
-                print(get_cart_id(request))
                 cart = Cart.objects.get(cart_id=get_cart_id(request))
-                print(cart)
                 is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
-                print(is_cart_item_exists)
                 if is_cart_item_exists:
                     # In order to get cartItems under the given cart
                     cart_items = CartItem.objects.filter(cart=cart)
-                    print(cart_items)
+
+                    # Getting the product variation by cart id
+                    product_variation = []
                     for item in cart_items:
-                        item.user = user
-                        print(user)
-                        print(item.user)
-                        item.save()
+                        var = item.variation.all()
+                        product_variation.append(list(var))
+
+                    # Get the cart items from the user to access his product_variation
+                    cart_item = CartItem.objects.filter(user=user)
+                    ex_var_list = []
+                    id = []
+                    for item in cart_item:
+                        existing_variation = item.variation.all()
+                        ex_var_list.append(list(existing_variation))
+                        id.append(item.id)
+
+                    for var in product_variation:
+                        if var in ex_var_list:
+                            index = ex_var_list.index(var)
+                            item_id = id[index]
+                            item = CartItem.objects.get(id=item_id)
+                            item.quantity += 1
+                            item.user = user
+                            item.save()
+                        else:
+                            cart_item = CartItem.objects.filter(cart=cart)
+                            for item in cart_items:
+                                item.user = user
+                                item.save()
             except:
                 print('executing except block')
                 pass

@@ -38,9 +38,11 @@ def add_to_cart(request, product_id):
             
             for item in cart_item:
                 existing_variation = item.variation.all()
-                ex_var_list.append(existing_variation)
+                # print(existing_variation)
+                ex_var_list.append(list(existing_variation))
+                # print(ex_var_list)
                 id.append(item.id)
-                
+
             if product_variation in ex_var_list:
                 index = ex_var_list.index(product_variation)
                 item_id = id[index]
@@ -98,7 +100,7 @@ def add_to_cart(request, product_id):
             id = []
             for item in cart_item:
                 existing_variation = item.variation.all()
-                ex_var_list.append(existing_variation)
+                ex_var_list.append(list(existing_variation))
                 id.append(item.id)
                 
             if product_variation in ex_var_list:
