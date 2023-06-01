@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-4">Billing Address</h4>
-            <form action="" method="POST">
+            <form action="{% url 'place_order' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="col form-group">
@@ -85,10 +85,10 @@
                                 <div class="aside"><img src="{{ item.product.images.url }}" class="img-sm"></div>
                                 <figcaption class="info">
                                     <a href="{{ item.product.get_url }}" class="title text-dark">{{item.product.product_name}}</a>
-                                    {% if item.variations.all %}
-                                    {% for item in cart_item.variations.all %}
+                                    {% if item.variation.all %}
+                                    {% for var in item.variation.all %}
                                         <p class="text-muted small">
-                                            {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                            {{ var.variation_category | capfirst }} : {{ var.variation_value | capfirst }} <br>
                                         </p>
                                     {% endfor %}
                                     {% endif %}
