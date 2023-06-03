@@ -121,6 +121,7 @@
                     }
                 }
             }
+            return cookieValue
         }
         
         // Stringify python variables
@@ -159,7 +160,7 @@
                         method: "POST",
                         headers: {
                             "Content-type": "application/json",
-                            // "X-CSRFToken": csrftoken,
+                            "X-CSRFToken": csrftoken,
                         },
                         body: JSON.stringify({
                             orderID: orderID,
