@@ -82,6 +82,7 @@ def login(request):
                     for item in cart_items:
                         var = item.variation.all()
                         product_variation.append(list(var))
+                        item.user = user
 
                     # Get the cart items from the user to access his product_variation
                     cart_item = CartItem.objects.filter(user=user)
