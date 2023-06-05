@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order, Payment, OrderProduct
@@ -69,8 +70,12 @@ def payments(request):
     # send_email.send()
 
     # Send order number and transaction id back to handle response after payment
+    data = {
+        'order_number': order.order_number,
+        'payment_id': payment.payment_id
+    }
 
-    return render(request, 'orders/payments.html')
+    return JsonResponse(data)
 
 def place_order(request, total=0, quantity=0):
     current_user = request.user
@@ -132,3 +137,31 @@ def place_order(request, total=0, quantity=0):
             return render(request, 'orders/payments.html', context)
         else:
             return redirect('checkout')
+
+def order_complete(request):
+    order_number = request.GET.get('order_number')
+    payment_id = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        order_products = OrderProduct.objects.filter(order_id=order.id)
+
+        payment = Payment.objects.get(payment_id=payment_id)
+
+        subtotal = 0
+        for i in order_products:
+            subtotal += i.product_price * i.quantity
+
+        context = {
+            'order': order,
+            'ordered_products': order_products,
+            'order_number': order.order_number,
+            'payment_id': payment.payment_id,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'orders/order_complete.html', context)
+    except(Payment.DoesNotExist, Order.DoesNotExist):
+        # If the given url is wrong, send user back to home.
+        return redirect('home')
+        
