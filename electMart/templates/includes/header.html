@@ -38,12 +38,12 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
                     <i class="fa fa-bars"></i> All category 
                 </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'store' %}" style="color: blue;">All Products</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'store' %}" style="color: blue;">All Products</a></li>
                     {% for category in links %}
-                    <a class="dropdown-item" href="{{ category.get_url }}">{{ category.name }} </a>
+                    <li><a class="dropdown-item" href="{{ category.get_url }}">{{ category.name }} </a></li>
                     {% endfor %}
-                </div>
+                </ul>
             </div>  <!-- category-wrap.// -->
         </div> <!-- col.// -->
         <a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
