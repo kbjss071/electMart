@@ -69,7 +69,6 @@
             </main> <!-- col.// -->
         </div> <!-- row.// -->
     </div> <!-- card.// -->
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
     
     <br>
     
@@ -81,7 +80,7 @@
             
         </header>
 
-        <form action="" method="POST">
+        <form action="{% url 'submit_review' single_product.id %}" method="POST">
             {% csrf_token %}
             <h5>Write your review</h5>
             <div>
@@ -105,8 +104,13 @@
                 Review:
                 <textarea name="review" class="form-control" rows="5" required></textarea>
                 <br>
+                {% if user.is_authenticated %}
                 <input type="submit" value="Submit Review" class="btn btn-primary">
+                {% else %}
+                <p>Login Required. <span><a href="{% url 'login' %}">Click here to log in.</a></span></p>
+                {% endif %}
             </div>
+            {% include 'includes/alerts.html'%}
         </form>
     
         <article class="box mb-3">
