@@ -67,3 +67,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     
     def has_module_perm(self, add_label):
         return True
+    
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
