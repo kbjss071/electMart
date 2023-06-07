@@ -74,17 +74,11 @@
     
     <div class="row">
                 <div class="col-md-9">
-    
-        <header class="section-heading">
-            <h3>Customer Reviews </h3>  
-            
-        </header>
-
+        
         <form action="{% url 'submit_review' single_product.id %}" method="POST">
             {% csrf_token %}
-            <h5>Write your review</h5>
             <div>
-                <!-- Rating start -->
+                <h5>Write your review</h5>
                 <div class="rate">
                     <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5"></label>
                     <input type="radio" name="rating" id="rating9" value="4.5" required><label for="rating9" title="4.5" class="half"></label>
@@ -97,7 +91,7 @@
                     <input type="radio" name="rating" id="rating2" value="1" required><label for="rating2" title="1"></label>
                     <input type="radio" name="rating" id="rating1" value="0.5" required><label for="rating1" title="0.5" class="half"></label>
                 </div>
-
+                <br>
                 Review Title: 
                 <input type="text" class="form-control" name="subject" required>
                 <br>
@@ -120,6 +114,17 @@
         <br>
         <header class="section-heading">
             <h3>Customer Reviews</h3>
+            <div class="rating-star">
+                <span>{{ single_product.averageRate }} </span>
+                <span>
+                    <i class="fa fa-star{% if single_product.averageRate < 0.5 %}-o{% elif single_product.averageRate >= 0.5 and single_product.averageRate < 1 %}-half-o {% endif %}"></i>
+                    <i class="fa fa-star{% if single_product.averageRate < 1.5 %}-o{% elif single_product.averageRate >= 1.5 and single_product.averageRate < 2 %}-half-o {% endif %}"></i>
+                    <i class="fa fa-star{% if single_product.averageRate < 2.5 %}-o{% elif single_product.averageRate >= 2.5 and single_product.averageRate < 3 %}-half-o {% endif %}"></i>
+                    <i class="fa fa-star{% if single_product.averageRate < 3.5 %}-o{% elif single_product.averageRate >= 3.5 and single_product.averageRate < 4 %}-half-o {% endif %}"></i>
+                    <i class="fa fa-star{% if single_product.averageRate < 4.5 %}-o{% elif single_product.averageRate >= 4.5 and single_product.averageRate < 5 %}-half-o {% endif %}"></i>
+                </span>
+                <span class="review">{{single_product.reviewCount}} ratings</span>
+            </div>
         </header>
             
         {% for review in reviews %}
