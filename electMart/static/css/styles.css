@@ -47,3 +47,7 @@ input:checked + label:hover, input:checked ~ label:hover, input:checked ~ label:
     /* font-size: smaller; */
     margin-left: 2.5rem;
 }
+
+.dashboard-card {
+    text-align: center;
+}
